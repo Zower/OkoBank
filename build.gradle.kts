@@ -43,7 +43,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.22.0")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.18.2")
     implementation("org.cache2k:cache2k-api:2.6.1.Final")
-    runtimeOnly("org.cache2k:cache2k-core:2.6.1.Final") // TODO?
+    runtimeOnly("org.cache2k:cache2k-core:2.6.1.Final")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
     implementation(ktorLibs.client.contentNegotiation)
     implementation(libs.logback.classic)
