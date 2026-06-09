@@ -255,7 +255,7 @@ data class TransactionStateStatisticsResponse(
 fun BigDecimal.convertCentsToCrownsForDisplay() =
     this.setScale(MONEY_SCALE).div(BigDecimal(CENT_TO_CROWN_RATE).setScale(MONEY_SCALE)).toString()
 
-// kotlinx.serialize (which is used for the swagger automatic schema generation)) doesn't include a OffsetDateTime serializer.
+// kotlinx.serialize (which is used for the swagger automatic schema generation) doesn't include a OffsetDateTime serializer.
 // Since kotlinx is not actually used to serialize, this is just a mock serializer that allows us to have OffsetDateTime in a @Serializable object.
 object MockISO8601OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
     override val descriptor: SerialDescriptor =
