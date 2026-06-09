@@ -256,7 +256,6 @@ fun BigDecimal.convertCentsToCrownsForDisplay() =
     this.setScale(MONEY_SCALE).div(BigDecimal(CENT_TO_CROWN_RATE).setScale(MONEY_SCALE)).toString()
 
 object ISO8601OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
-    // Serial names of descriptors should be unique, this is why we advise including app package in the name.
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("com.example.OffsetDateTime", PrimitiveKind.STRING)
 
