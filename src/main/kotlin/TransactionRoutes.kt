@@ -185,7 +185,7 @@ data class TransactionResponse(
     val cardNumber: Long,
     @JsonSchema.Example("Visa")
     val cardType: String, // Visa, Amex, etc.
-    @Serializable(with = ISO8601OffsetDateTimeSerializer::class)
+    @Serializable(with = MockISO8601OffsetDateTimeSerializer::class)
     @JsonSchema.Example("\"2025-05-13T00:00:00Z\"")
     val date: OffsetDateTime,
     @JsonSchema.Example("123456789")
@@ -255,7 +255,9 @@ data class TransactionStateStatisticsResponse(
 fun BigDecimal.convertCentsToCrownsForDisplay() =
     this.setScale(MONEY_SCALE).div(BigDecimal(CENT_TO_CROWN_RATE).setScale(MONEY_SCALE)).toString()
 
-object ISO8601OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
+// kotlinx.serialize (which is used for the swagger automatic schema generation)) doesn't include a OffsetDateTime serializer.
+// Since kotlinx is not actually used to serialize, this is just a mock serializer that allows us to have OffsetDateTime in a @Serializable object.
+object MockISO8601OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("com.example.OffsetDateTime", PrimitiveKind.STRING)
 
