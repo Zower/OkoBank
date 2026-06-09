@@ -1,5 +1,6 @@
 package com.example.domain
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -27,7 +28,10 @@ data class TransactionReference(
 }
 
 enum class TransactionState {
-    GODKJENT,
-    AVVIST,
-    VENTENDE;
+    @JsonProperty("GODKJENT")
+    ACCEPTED,
+    @JsonProperty("AVVIST")
+    DENIED,
+    @JsonProperty("VENTENDE")
+    WAITING;
 }

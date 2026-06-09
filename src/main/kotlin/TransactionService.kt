@@ -63,9 +63,9 @@ open class TransactionService(
         return TransactionStatistics(
             organizationStatistics,
             TransactionStateStatistics(
-                rejected = allTransactions.count { it.transactionState == TransactionState.AVVIST },
-                accepted = allTransactions.count { it.transactionState == TransactionState.GODKJENT },
-                awaiting = allTransactions.count { it.transactionState == TransactionState.VENTENDE }
+                rejected = allTransactions.count { it.transactionState == TransactionState.DENIED },
+                accepted = allTransactions.count { it.transactionState == TransactionState.ACCEPTED },
+                awaiting = allTransactions.count { it.transactionState == TransactionState.WAITING }
             )
         )
     }

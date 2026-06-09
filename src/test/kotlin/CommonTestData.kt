@@ -21,7 +21,7 @@ object CommonTestData {
         date = OffsetDateTime.now(),
         organizationNumber = 123456,
         valueInCents = BigDecimal("200"),
-        transactionState = TransactionState.VENTENDE
+        transactionState = TransactionState.WAITING
     )
 
     val allTransactions = listOf(
@@ -35,7 +35,7 @@ object CommonTestData {
             reference = TransactionReference(
                 UUID.randomUUID()
             ),
-            transactionState = TransactionState.GODKJENT
+            transactionState = TransactionState.ACCEPTED
         ),
     )
 
