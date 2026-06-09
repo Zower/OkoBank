@@ -6,5 +6,5 @@ fun Application.rootModule() {
     configureDependencyInjection()
     configureHttpDocumentation()
     configureSerialization()
-    configureRouting()
+    configureTransactionRouting()
 }

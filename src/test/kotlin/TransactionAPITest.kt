@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.domain.BrRegClient
+import com.example.domain.TransactionRepository
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -8,12 +9,12 @@ import io.ktor.server.plugins.di.dependencies
 import io.ktor.server.testing.testApplication
 import kotlin.test.*
 
-class ServerTest {
+class TransactionAPITest {
 
     @Test
     fun `get all transactions endpoint should return 200`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -23,7 +24,7 @@ class ServerTest {
     @Test
     fun `get all transactions endpoint should return 400 with bad input on state`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -33,7 +34,7 @@ class ServerTest {
     @Test
     fun `get all transactions endpoint should return 200 with valid state`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -43,7 +44,7 @@ class ServerTest {
     @Test
     fun `get all transactions endpoint should return 400 with bad input on dates`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -53,7 +54,7 @@ class ServerTest {
     @Test
     fun `get all transactions endpoint should parse ISO8601`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -63,17 +64,17 @@ class ServerTest {
     @Test
     fun `getTransaction endpoint should return 200`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
-        assertEquals(HttpStatusCode.OK, client.get("/transactions/dbde1045-a4e6-4969-95b6-dc20624c9865").status)
+        assertEquals(HttpStatusCode.OK, client.get("/transactions/b0f78a79-8435-436d-98b7-2387515571d8").status)
     }
 
     @Test
     fun `getTransaction endpoint should return 404 with fake id`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -83,7 +84,7 @@ class ServerTest {
     @Test
     fun `getTransaction endpoint should return 400 with bad input`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
@@ -93,22 +94,32 @@ class ServerTest {
     @Test
     fun `openapi docs should be available`() = testApplication {
         application {
-            mockRegistryClient()
+            mockIntegrations()
             rootModule()
         }
 
         assertEquals(HttpStatusCode.OK, client.get("/openapi.json").status)
     }
+
+    @Test
+    fun `get statistics endpoint should return 200`() = testApplication {
+        application {
+            mockIntegrations()
+            rootModule()
+        }
+
+        assertEquals(HttpStatusCode.OK, client.get("/transactions/statistics").status)
+    }
 }
 
-fun Application.mockRegistryClient() {
+private fun Application.mockIntegrations() {
     dependencies {
         provide<BrRegClient> {
-            object : BrRegClient {
-                override fun getNameByOrganizationNumber(organizationNumber: Long): String {
-                    return organizationNumber.toString()
-                }
-            }
+            CommonTestData.mockClient
+        }
+
+        provide<TransactionRepository> {
+            CommonTestData.mockRepository
         }
     }
 }

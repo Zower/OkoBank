@@ -1,7 +1,7 @@
 package com.example.infra.persistence
 
 import com.example.domain.TransactionData
-import com.example.domain.TransactionId
+import com.example.domain.TransactionReference
 import com.example.domain.TransactionRepository
 import com.example.domain.TransactionState
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -61,8 +61,8 @@ class InMemoryTransactionRepository : TransactionRepository {
             }
     }
 
-    override fun getByTransactionId(transactionId: TransactionId): TransactionData? {
-        return csvData.find { it.reference == transactionId }
+    override fun getByTransactionReference(transactionReference: TransactionReference): TransactionData? {
+        return csvData.find { it.reference == transactionReference }
     }
 }
 
@@ -76,7 +76,7 @@ data class CsvTransactionRow(
     val transaksjonsstatus: TransactionState,
 ) {
     fun toTransactionData() = TransactionData(
-        reference = TransactionId(referanse),
+        reference = TransactionReference(referanse),
         cardNumber = kortnummer,
         cardType = korttype,
         date = dato,

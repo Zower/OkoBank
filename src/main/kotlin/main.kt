@@ -1,13 +1,5 @@
 package com.example
 
-import io.ktor.server.engine.*
-import io.ktor.server.application.*
+import io.ktor.server.netty.EngineMain
 
-fun main() {
-    embeddedServer(
-        factory = io.ktor.server.netty.Netty,
-        port = 8080,
-        host = "0.0.0.0",
-        module = Application::rootModule
-    ).start(wait = true)
-}
+fun main(args: Array<String>) = EngineMain.main(args)

@@ -45,6 +45,7 @@ dependencies {
     implementation("org.cache2k:cache2k-api:2.6.1.Final")
     runtimeOnly("org.cache2k:cache2k-core:2.6.1.Final")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
+    implementation("io.arrow-kt:arrow-core:2.2.3")
     implementation(ktorLibs.client.contentNegotiation)
     implementation(libs.logback.classic)
     testImplementation(kotlin("test"))
