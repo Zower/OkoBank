@@ -34,4 +34,13 @@ enum class TransactionState {
     DENIED,
     @JsonProperty("VENTENDE")
     WAITING;
+
+    companion object {
+        fun rawValueOf(value: String) = when(value) {
+            "GODKJENT" -> ACCEPTED
+            "AVVIST" -> DENIED
+            "VENTENDE" -> WAITING
+            else -> throw IllegalArgumentException("Unknown transaction state: $value")
+        }
+    }
 }

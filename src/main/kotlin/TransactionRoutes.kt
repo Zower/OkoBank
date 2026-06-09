@@ -64,7 +64,7 @@ fun Application.configureTransactionRouting() {
             try {
                 val fromParsed = from?.let { OffsetDateTime.parse(it) }
                 val toParsed = to?.let { OffsetDateTime.parse(it) }
-                val stateParsed = state?.let { TransactionState.valueOf(it) }
+                val stateParsed = state?.let { TransactionState.rawValueOf(it) }
 
                 val responses = service.getAll(stateParsed, fromParsed, toParsed)
 
