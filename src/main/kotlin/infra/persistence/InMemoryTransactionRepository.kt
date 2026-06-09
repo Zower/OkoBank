@@ -17,13 +17,14 @@ import java.util.UUID
 
 val mapper: ObjectMapper = CsvMapper().registerKotlinModule().registerModule(JavaTimeModule())
 
-// TODO: Write docs on assumptions
-// Amongst others:
-// * Storing data on receive, database, etc.
-// * Enriching data on receive vs on-demand
+/**
+ * A simple in-memory store for the given CSV file. Daily receiving and ingestion methods are not considered, the CSV is just loaded from a hard-coded file
+ *
+ * In a production application, the data should be ingested into a database. Depending on business requirements and size of the CSV, this
+ * may be a long-running process, and it may be beneficial to process the enriched data (name) at that point, rather than on demand.
+ */
 class InMemoryTransactionRepository : TransactionRepository {
     val csvData: List<TransactionData> by lazy {
-
         val schema = CsvSchema.builder()
             .addColumn("referanse")
             .addColumn("kortnummer")
@@ -35,7 +36,7 @@ class InMemoryTransactionRepository : TransactionRepository {
             .build()
             .withHeader()
 
-        // Could be better error handling here if we dont trust the CSV data
+        // Could be better error handling here if we don't trust the CSV data
         mapper
             .readerFor(CsvTransactionRow::class.java)
             .with(schema)
