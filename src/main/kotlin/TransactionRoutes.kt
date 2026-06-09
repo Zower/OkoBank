@@ -81,6 +81,8 @@ fun Application.configureTransactionRouting() {
                 call.respond(HttpStatusCode.BadRequest)
             }
         }.describe {
+            tag("Transactions")
+
             summary = "Get all transactions"
             parameters {
                 query("state") {
@@ -124,6 +126,8 @@ fun Application.configureTransactionRouting() {
 
             call.respond(TransactionResponse.fromDomain(response))
         }.describe {
+            tag("Transactions")
+
             summary = "Get transaction by reference"
             parameters {
                 path("reference") {
@@ -152,6 +156,8 @@ fun Application.configureTransactionRouting() {
 
             call.respond(TransactionStatisticsResponse.fromDomain(response))
         }.describe {
+            tag("Transactions")
+
             summary = "Get statistics about transactions"
 
             responses {
@@ -165,6 +171,7 @@ fun Application.configureTransactionRouting() {
             val doc = OpenApiDoc(info = openApiInfo) + call.application.routingRoot.descendants()
             call.respond(doc)
         }.describe {
+            tag("OpenAPI")
             summary = "OpenAPI documentation"
         }
     }
@@ -245,11 +252,13 @@ data class TransactionStateStatisticsResponse(
     }
 }
 
-fun BigDecimal.convertCentsToCrownsForDisplay() = this.setScale(MONEY_SCALE).div(BigDecimal(CENT_TO_CROWN_RATE).setScale(MONEY_SCALE)).toString()
+fun BigDecimal.convertCentsToCrownsForDisplay() =
+    this.setScale(MONEY_SCALE).div(BigDecimal(CENT_TO_CROWN_RATE).setScale(MONEY_SCALE)).toString()
 
 object ISO8601OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
     // Serial names of descriptors should be unique, this is why we advise including app package in the name.
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("com.example.OffsetDateTime", PrimitiveKind.STRING)
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("com.example.OffsetDateTime", PrimitiveKind.STRING)
 
     override fun serialize(encoder: kotlinx.serialization.encoding.Encoder, value: OffsetDateTime) {
         TODO("Only used for example values in Swagger, should not be used to serialize a value")
